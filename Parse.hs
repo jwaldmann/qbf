@@ -20,12 +20,18 @@ qdimacs f = do
 
 qbf :: Parser QBF
 qbf = do
+    many comment
     string "p" ; spaces
     string "cnf" ; spaces
     nv <- natural ; nc <- natural
     p <- prefix
     c <- cnf
     return $ QBF p c
+
+comment = do
+    string "c"
+    manyTill anyChar newline
+    spaces
 
 prefix = concat <$> many prefix_line
 
@@ -49,9 +55,9 @@ clause = do
     return ls
 
 literal = try $ do
-    n <- natural 
-    if n == 0 then fail "literal"
-       else return $ CNF.literal (Variable $ abs n) (n > 0) 
+    p <- option True (do string "-"; return False) 
+    v <- variable
+    return $ CNF.literal v p
 
 natural :: Parser Int
 natural = do
