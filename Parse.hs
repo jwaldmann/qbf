@@ -12,7 +12,7 @@ import Text.Parsec.Char
 
 import Control.Applicative ((<$>))
 
-qdimacs f = do
+read_qdimacs f = do
     res <- parseFromFile qbf f
     case res of
         Left err -> error $ show err

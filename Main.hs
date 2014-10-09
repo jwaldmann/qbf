@@ -5,7 +5,7 @@ import System.Environment
 
 main = do
     [ f ] <- getArgs
-    q <- qdimacs f
+    q <- read_qdimacs f
     r <- Solve.completeIO q
     print r
 
