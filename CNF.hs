@@ -23,6 +23,9 @@ literal (Variable v) p =
 polarity :: Literal -> Bool
 polarity (Literal l) = l > 0
 
+variable :: Literal -> Variable
+variable (Literal l) = Variable $ abs l
+
 negate :: Literal -> Literal
 negate (Literal l) = Literal (Prelude.negate l)
 

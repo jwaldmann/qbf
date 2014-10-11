@@ -37,14 +37,14 @@ prefix = many prefix_line
 
 prefix_line = do
     q <- quantifier
-    vs <- many variable ; zero
+    vs <- many var ; zero
     return $ Declaration q vs
     
 quantifier 
      =  do string "a" ; spaces ; return Forall
     <|> do string "e" ; spaces ; return Exists
 
-variable = try $ do
+var = try $ do
     n <- natural
     if n > 0 then return $ Variable n else fail "variable"
 
@@ -56,7 +56,7 @@ clause = do
 
 literal = try $ do
     p <- option True (do string "-"; return False) 
-    v <- variable
+    v <- var
     return $ CNF.literal v p
 
 natural :: Parser Int
