@@ -2,7 +2,10 @@ module QBF where
 
 import CNF
 
-data Quantifier = Exists | Forall deriving ( Eq, Ord, Show )
+data Quantifier = Exists | Forall deriving ( Eq, Ord )
+
+instance Show Quantifier where
+    show q = case q of Exists -> "e" ; Forall -> "a"
 
 data Declaration = Declaration Quantifier [Variable] deriving Show
 
