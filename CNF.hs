@@ -6,12 +6,19 @@ module CNF where
 import Prelude hiding ( negate )
 import qualified Prelude
 
-newtype Variable = Variable Int deriving (Eq, Ord, Show)
+newtype Variable = Variable { unVariable :: Int }
+    deriving (Eq, Ord)
 
-newtype Literal = Literal Int deriving (Eq, Ord, Show)
+instance Show Variable where show (Variable v) = show v
+
+newtype Literal = Literal { unLiteral :: Int } 
+    deriving (Eq, Ord)
+
+instance Show Literal where show (Literal l) = show l
 
 literal :: Variable -> Bool -> Literal
-literal (Variable v) p = if p then Literal v else Literal $ Prelude.negate v
+literal (Variable v) p = 
+    if p then Literal v else Literal $ Prelude.negate v
 
 polarity :: Literal -> Bool
 polarity (Literal l) = l > 0

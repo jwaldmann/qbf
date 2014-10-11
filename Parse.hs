@@ -33,12 +33,12 @@ comment = do
     manyTill anyChar newline
     spaces
 
-prefix = concat <$> many prefix_line
+prefix = many prefix_line
 
 prefix_line = do
     q <- quantifier
     vs <- many variable ; zero
-    return $ map (Declaration q) vs
+    return $ Declaration q vs
     
 quantifier 
      =  do string "a" ; spaces ; return Forall
